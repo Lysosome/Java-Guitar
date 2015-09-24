@@ -1,1 +1,4 @@
-man uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu
+public class RingBuffer
+{
+
+}
