@@ -1,4 +1,8 @@
+package javaguitar;
+
 import java.util.Random;
+
+
 public class GuitarString {
 	private RingBuffer g;
 	private int tickTock;

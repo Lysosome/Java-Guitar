@@ -1,3 +1,5 @@
+package javaguitar;
+
 public class RingBuffer
 {
    //instance variables
