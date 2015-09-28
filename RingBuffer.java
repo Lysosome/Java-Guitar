@@ -60,8 +60,10 @@ public class RingBuffer
       return ret;
    }
    
-   public double peek()
+   public double peek(int loc)
    {
-      return arr[first];
+      if(first+loc>capacity)
+         return arr[first+loc-capacity];
+      return arr[first+loc];
    }
 }
