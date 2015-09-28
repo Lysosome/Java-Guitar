@@ -8,16 +8,16 @@ public class GuitarString {
 	}
 	GuitarString (double[] init) {
 		g = new RingBuffer(init.length);
-		for(int i; i < init.length; i++) {
+		for(int i=0; i < init.length; i++) {
 			g.enqueue(init[i]);
 		}
 	}
 	void pluck() {
-		for(int i; i < init.length; i++)
+		for(int i=0; i < g.size(); i++)
 			g.dequeue();
 		Random rand = new Random();
-		for(int i; i < init.length; i++)
-			g.enqueue(Random.nextDouble() - 0.5);
+		for(int i=0; i < g.size(); i++)
+			g.enqueue(rand.nextDouble() - 0.5);
 	}
 	void tic() {
 		g.dequeue();
