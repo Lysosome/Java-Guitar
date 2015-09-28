@@ -1,6 +1,8 @@
 import java.util.Random;
 public class GuitarString {
 	private RingBuffer g;
+	private int tickTock;
+	private static final double ENERGY_DECAY = 0.994;
 	GuitarString (double frequency) {
 		g = new RingBuffer(44100/(int)frequency);
 	}
@@ -18,12 +20,14 @@ public class GuitarString {
 			g.enqueue(Random.nextDouble() - 0.5);
 	}
 	void tic() {
-		tic += 1;
+		g.dequeue();
+		g.enqueue((g.peek(0) + g.peek(1)) * ENERGY_DECAY);
+		tickTock += 1;
 	}
 	double sample() {
-
+		return g.peek(0);
 	}
 	int time() {
-
+		return tickTock;
 	}
 }
