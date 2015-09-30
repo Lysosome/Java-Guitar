@@ -64,7 +64,7 @@ public class RingBuffer
    
    public double peek(int loc)
    {
-      if(first+loc>capacity)
+      if(first+loc>=capacity)
          return arr[first+loc-capacity];
       return arr[first+loc];
    }

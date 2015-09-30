@@ -25,7 +25,7 @@ public class GuitarString {
 	}
 	void tic() {
 		g.dequeue();
-		g.enqueue((g.peek(0) + g.peek(1)) * ENERGY_DECAY);
+		g.enqueue((g.peek(0) + g.peek(1))* 0.5 * ENERGY_DECAY);
 		tickTock += 1;
 	}
 	double sample() {
