@@ -1,6 +1,6 @@
 package javaguitar;
 import java.util.ArrayList;
-public class GuitarHeroine {
+public class RUN {
    public static void main (String[] args) {
       Keyboard threaded = new Keyboard();
       threaded.start();
@@ -26,7 +26,6 @@ public class GuitarHeroine {
         }
    }
 }
-
 class Keyboard extends Thread {
    public void run() {
 	   final String KEYBOARD = "q2we4r5ty7u8i9op-[=zxdcfvgbnjmk,.;/' ";
