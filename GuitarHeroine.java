@@ -1,8 +1,11 @@
 package javaguitar;
 import java.util.ArrayList;
 public class GuitarHeroine {
+
+   protected static Double sampleVal = 0.0;
+
 	public static void main (String[] args) {
-		Keyboard threaded = new Keyboard();
+		Keyboard threaded = new Keyboard(sampleVal);
 		threaded.start();
 		// number of line segments to plot
 		int N = 100;
@@ -31,13 +34,19 @@ public class GuitarHeroine {
 		   -1 is at the bottom of the screen, 1 is at the top, 0 is in the middle.
 		   Then advance to the next pixel and loop when you reach the end of the screen.
 		   */
-		for(int i=0; i<1000; i++)
-			System.out.println(threaded.sample());
+		while(true)
+			System.out.println(threaded.sampleVal());
 	}
 }
 
 class Keyboard extends Thread {
 	private static double sample = 0;
+   protected Double sampleObj;
+   
+   public Keyboard(Double theSample)
+   {
+      sampleObj=theSample;
+   }
 
 	public void run() {
 		final String KEYBOARD = "q2we4r5ty7u8i9op-[=zxdcfvgbnjmk,.;/' ";
@@ -67,8 +76,9 @@ class Keyboard extends Thread {
 			sample = 0;
 			for(int i =0; i<keys.size(); i++)
 				sample+=keys.get(i).sample();
-
-			// play the sample on standard audio
+			sampleObj=sample;
+         
+         // play the sample on standard audio
 			StdAudio.play(sample);
          
 			// advance the simulation of each guitar string by one step
@@ -78,7 +88,8 @@ class Keyboard extends Thread {
 			}
 
 		}
+      
+      
 	}
-	public double sample(){return sample;}
-
+   public Double sampleVal(){return sampleObj;}
 }
