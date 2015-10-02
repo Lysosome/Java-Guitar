@@ -70,7 +70,7 @@ class Keyboard extends Thread {
 
 			// play the sample on standard audio
 			StdAudio.play(sample);
-			System.out.println(sample);
+         
 			// advance the simulation of each guitar string by one step
 			for(int i =0; i<keys.size(); i++)
 			{
