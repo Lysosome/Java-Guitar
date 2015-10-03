@@ -1,42 +1,102 @@
 package javaguitar;
 import java.util.ArrayList;
+import java.awt.Color;
+import java.util.concurrent.*;
+
 public class GuitarHeroine {
 
    protected static Double sampleVal = 0.0;
+   
+   private static Integer pos = 0;
+   private static double[] x = {0,0};
+   private static double[] y = {-1,1};
+   private static double lastSample = 0;
+   private final static int X_SCALE = 200;
+   private final static double Y_SCALE = 0.25;
 
 	public static void main (String[] args) {
 		Keyboard threaded = new Keyboard(sampleVal);
 		threaded.start();
-		// number of line segments to plot
-		int N = 100;
-
-		// the function y = sin(4x) + sin(20x), sampled at N points
-		// between x = 0 and x = pi
-		double[] x = new double[N+1];
-		double[] y = new double[N+1];
-		for (int i = 0; i <= N; i++) {
-			x[i] = Math.PI * i / N;
-			y[i] = Math.sin(4*x[i]) + Math.sin(20*x[i]);
-		}
-
-		// rescale the coordinate system
-		StdDraw.setXscale(0, Math.PI);
-		StdDraw.setYscale(-2.0, +2.0);
-
-		// plot the approximation to the function
-		for (int i = 0; i < N; i++) {
-			StdDraw.line(x[i], y[i], x[i+1], y[i+1]);
-		}
-
+		
+      /*
+         // number of line segments to plot
+   		int N = 100;
+   
+   		// the function y = sin(4x) + sin(20x), sampled at N points
+   		// between x = 0 and x = pi
+   		double[] x = new double[N+1];
+   		double[] y = new double[N+1];
+   		for (int i = 0; i <= N; i++) {
+   			x[i] = Math.PI * i / N;
+   			y[i] = Math.sin(4*x[i]) + Math.sin(20*x[i]);
+   		}
+   
+   		// rescale the coordinate system
+   		StdDraw.setXscale(0, Math.PI);
+   		StdDraw.setYscale(-2.0, +2.0);
+   
+   		// plot the approximation to the function
+   		for (int i = 0; i < N; i++) {
+   			StdDraw.line(x[i], y[i], x[i+1], y[i+1]);
+   		}
+      */
+      
 		//Pseudocode for visualizer
 		/*
 		   Make a GUI and then update the current pixel in accordance with the current value of sample.
 		   -1 is at the bottom of the screen, 1 is at the top, 0 is in the middle.
 		   Then advance to the next pixel and loop when you reach the end of the screen.
 		   */
-		while(true)
-			System.out.println(threaded.sampleVal());
+		
+      StdDraw.setXscale(0, X_SCALE);
+      StdDraw.setYscale(-Y_SCALE, +Y_SCALE);
+      
+      
+      final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+      executorService.scheduleAtFixedRate(new Runnable() {
+        @Override
+        public void run() {
+            myTask(threaded);
+        }
+    }, 0, 100, TimeUnit.MILLISECONDS);
+      
+      
+      /*while(true)
+      {
+			if(pos>X_SCALE)
+         {
+            pos-=X_SCALE;
+         }
+         
+         StdDraw.setPenColor(Color.WHITE);
+         x[0]=pos;
+         x[1]=pos+7;
+         StdDraw.polygon(x,y);
+         StdDraw.setPenColor();
+         
+         StdDraw.line(pos, threaded.sampleVal(), pos+1, threaded.sampleVal());
+         pos++;
+      }
+      */
 	}
+   public static void myTask(Keyboard threaded)
+   {
+      if(pos>X_SCALE)
+         {
+            pos-=X_SCALE;
+         }
+         
+         StdDraw.setPenColor(Color.WHITE);
+         x[0]=pos;
+         x[1]=pos+7;
+         StdDraw.polygon(x,y);
+         StdDraw.setPenColor();
+         
+         StdDraw.line(pos, lastSample, pos+1, threaded.sampleVal());
+         pos++;
+         lastSample=threaded.sampleVal();
+
+   }
 }
 
 class Keyboard extends Thread {
