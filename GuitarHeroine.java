@@ -11,7 +11,7 @@ public class GuitarHeroine {
    private static double[] x = {0,0};
    private static double[] y = {-1,1};
    private static double lastSample = 0;
-   private final static int X_SCALE = 200;
+   private final static int X_SCALE = 500;
    private final static double Y_SCALE = 0.25;
 
 	public static void main (String[] args) {
@@ -58,7 +58,7 @@ public class GuitarHeroine {
         public void run() {
             myTask(threaded);
         }
-    }, 0, 100, TimeUnit.MILLISECONDS);
+    }, 0, 20, TimeUnit.MILLISECONDS);
       
       
       /*while(true)
@@ -88,7 +88,7 @@ public class GuitarHeroine {
          
          StdDraw.setPenColor(Color.WHITE);
          x[0]=pos;
-         x[1]=pos+7;
+         x[1]=pos+14;
          StdDraw.polygon(x,y);
          StdDraw.setPenColor();
          
