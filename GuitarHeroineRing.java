@@ -2,6 +2,7 @@ package javaguitar;
 import java.util.ArrayList;
 import java.awt.Color;
 import java.util.concurrent.*;
+import java.util.Collections;
 
 public class GuitarHeroineRing {
 
@@ -13,7 +14,7 @@ public class GuitarHeroineRing {
    private final static int X_SCALE = 1000;
    private final static double Y_SCALE = 0.4;
    private static double[] y = {-Y_SCALE,Y_SCALE};
-   private static ArrayList<Double> sampleArr = new ArrayList<Double>(X_SCALE);
+   private static ArrayList<Double> sampleArr = new ArrayList<Double>(Collections.nCopies(X_SCALE, 0.0));
 
 	public static void main (String[] args) {
 		Keyboard threaded = new Keyboard(sampleVal);
@@ -47,6 +48,7 @@ public class GuitarHeroineRing {
          for(int i=0; i<X_SCALE; i++)
          {
             StdDraw.point(i,sampleArr.get(i));
+            System.out.println(sampleArr.get(i));
          }
          
    }
