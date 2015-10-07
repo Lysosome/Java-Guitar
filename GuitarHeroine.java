@@ -5,8 +5,7 @@ import java.util.concurrent.*;
 
 public class GuitarHeroine {
 
-   protected static Double sampleVal = 0.0;
-   
+      
    private static Integer pos = 0;
    private static double[] x = {0,0};
    private static double[] y = {-1,1};
@@ -15,7 +14,7 @@ public class GuitarHeroine {
    private final static double Y_SCALE = 0.25;
 
 	public static void main (String[] args) {
-		Keyboard threaded = new Keyboard(sampleVal);
+		Keyboard threaded = new Keyboard();
 		threaded.start();
 		
       /*
@@ -82,31 +81,27 @@ public class GuitarHeroine {
    public static void myTask(Keyboard threaded)
    {
       if(pos>X_SCALE)
-         {
-            pos-=X_SCALE;
-         }
+      {
+         pos-=X_SCALE+14;
+      }
          
-         StdDraw.setPenColor(Color.WHITE);
-         x[0]=pos;
-         x[1]=pos+14;
-         StdDraw.polygon(x,y);
-         StdDraw.setPenColor();
-         
-         StdDraw.line(pos, lastSample, pos+1, threaded.sampleVal());
-         pos++;
-         lastSample=threaded.sampleVal();
+      StdDraw.setPenColor(Color.WHITE);
+      x[0]=pos;
+      x[1]=pos+14;
+      StdDraw.polygon(x,y);
+      StdDraw.setPenColor();
+      
+      StdDraw.line(pos, lastSample, pos+1, threaded.sampleVal());
+      pos++;
+      lastSample=threaded.sampleVal();
 
    }
 }
 
 class Keyboard extends Thread {
 	private static double sample = 0;
-   protected Double sampleObj;
    
-   public Keyboard(Double theSample)
-   {
-      sampleObj=theSample;
-   }
+   
 
 	public void run() {
 		final String KEYBOARD = "q2we4r5ty7u8i9op-[=zxdcfvgbnjmk,.;/' ";
@@ -136,7 +131,6 @@ class Keyboard extends Thread {
 			sample = 0;
 			for(int i =0; i<keys.size(); i++)
 				sample+=keys.get(i).sample();
-			sampleObj=sample;
          
          // play the sample on standard audio
 			StdAudio.play(sample);
@@ -151,5 +145,5 @@ class Keyboard extends Thread {
       
       
 	}
-   public Double sampleVal(){return sampleObj;}
+   public double sampleVal(){return sample;}
 }

@@ -33,12 +33,18 @@ public class GuitarHeroineRing {
     }, 0, 20, TimeUnit.MICROSECONDS);
       */
       
+      int i=0;
+      int j;
+      for(j=0; j<X_SCALE*0.8; j++)
+      {
+         StdDraw.point(j,threaded.sampleVal());
+      }
+      
       while(true)
       {
-         myTask();
-			sampleArr.remove(0);
-         sampleArr.add(threaded.sampleVal());
-         StdDraw.clear();
+         StdDraw.point(i+j,threaded.sampleVal());
+			i++;
+         StdDraw.setXscale(i, X_SCALE+i);
       }
       
 	}
