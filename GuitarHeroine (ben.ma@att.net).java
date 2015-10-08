@@ -3,19 +3,19 @@ import java.util.ArrayList;
 import java.awt.Color;
 import java.util.concurrent.*;
 
-public class GuitarHeroineRing {
+public class GuitarHeroine {
 
-      
+   protected static Double sampleVal = 0.0;
+   
    private static Integer pos = 0;
    private static double[] x = {0,0};
    private static double[] y = {-1,1};
    private static double lastSample = 0;
-   private final static int X_SCALE = 5000;
+   private final static int X_SCALE = 500;
    private final static double Y_SCALE = 0.25;
-   private final static int INTERVAL = (int)X_SCALE/8;
 
 	public static void main (String[] args) {
-		Keyboard threaded = new Keyboard();
+		Keyboard threaded = new Keyboard(sampleVal);
 		threaded.start();
 		
       /*
@@ -48,7 +48,6 @@ public class GuitarHeroineRing {
 		   Then advance to the next pixel and loop when you reach the end of the screen.
 		   */
 		
-      StdDraw.setCanvasSize(2000,512);
       StdDraw.setXscale(0, X_SCALE);
       StdDraw.setYscale(-Y_SCALE, +Y_SCALE);
       
@@ -82,25 +81,32 @@ public class GuitarHeroineRing {
 	}
    public static void myTask(Keyboard threaded)
    {
-      if(pos>INTERVAL)
-      {
-         pos-=INTERVAL;
-         StdDraw.clear();
-      }
+      if(pos>X_SCALE)
+         {
+            pos-=X_SCALE;
+         }
          
-      for(int i=0; i<8; i++)
-      {     
-         StdDraw.line(pos+INTERVAL*i, lastSample, pos+1+INTERVAL*i, threaded.sampleVal());
+         StdDraw.setPenColor(Color.WHITE);
+         x[0]=pos;
+         x[1]=pos+7;
+         StdDraw.polygon(x,y);
+         StdDraw.setPenColor();
+         
+         StdDraw.line(pos, lastSample, pos+1, threaded.sampleVal());
          pos++;
          lastSample=threaded.sampleVal();
-      }
+
    }
 }
 
 class Keyboard extends Thread {
 	private static double sample = 0;
+   protected Double sampleObj;
    
-   
+   public Keyboard(Double theSample)
+   {
+      sampleObj=theSample;
+   }
 
 	public void run() {
 		final String KEYBOARD = "q2we4r5ty7u8i9op-[=zxdcfvgbnjmk,.;/' ";
@@ -130,6 +136,7 @@ class Keyboard extends Thread {
 			sample = 0;
 			for(int i =0; i<keys.size(); i++)
 				sample+=keys.get(i).sample();
+			sampleObj=sample;
          
          // play the sample on standard audio
 			StdAudio.play(sample);
@@ -144,5 +151,5 @@ class Keyboard extends Thread {
       
       
 	}
-   public double sampleVal(){return sample;}
+   public Double sampleVal(){return sampleObj;}
 }
